@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Kashmir Journey</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        /* Homepage styles */
+        body.homepage {
+            background-image: url("https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/Vaishno_devi.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            color: #fff;
+        }
+        body.homepage::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+        .hero-section {
+            background-image: none;
+        }
+        .main-content {
+            background-image: none;
+        }
+        .destination-card {
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.85);
+        }
+        .destination-card:hover .card-image {
+            transform: scale(1.05);
+        }
+        .destination-card:hover .card-overlay {
+            opacity: 1;
+        }
+        #dynamicText {
+            transition: opacity 0.7s ease-in-out;
+        }
+        .fade-out {
+            opacity: 0;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+        .animate-fadeInDown { animation: fadeInDown 1s ease-out; }
+        .animate-fadeInUp { animation: fadeInUp 1s ease-out both; }
+        .animate-pulse { animation: pulse 1.5s ease-in-out infinite alternate; }
+
+        /* Section backgrounds */
+        .section-bg-matadham {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/matadhambg-min-min.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+        }
+        .section-bg-patnitop {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/patnitopbg-min-min.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+        }
+        .section-bg-natthatop {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/natthatopbg-min-min.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+        }
+        .section-bg-greenhouse {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/greenhousebg-min-min.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+        }
+        /* Card styles for all sections */
+        .card:hover .card-image {
+            transform: scale(1.05);
+        }
+        .card:hover .card-overlay {
+            opacity: 1;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        /* Overlay for all cards */
+        .card-overlay {
+            opacity: 0;
+        }
+        /* Navigation bar styles */
+        .nav-bar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 50;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+        .nav-link {
+            color: #fff;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            transition: background 0.2s, color 0.2s;
+            border-radius: 0.5rem;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            color: #ffd700;
+        }
+        @media (max-width: 640px) {
+            .nav-link { padding: 0.75rem 1rem; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body class="homepage min-h-screen text-white relative">
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar flex justify-center items-center py-2 space-x-2 sm:space-x-4">
+        <button class="nav-link active" onclick="showSection('homepage')">Home</button>
+        <button class="nav-link" onclick="showSection('matadham')">Mata Dham</button>
+        <button class="nav-link" onclick="showSection('patnitop')">Patni Top</button>
+        <button class="nav-link" onclick="showSection('natthatop')">Nattha Top</button>
+        <button class="nav-link" onclick="showSection('greenhouse')">Green House</button>
+    </nav>
+
+    <!-- Homepage Section -->
+    <section id="homepage-section" class="homepage min-h-screen pt-16 block">
+        <div class="hero-section relative h-[70vh] flex items-center justify-center text-center">
+            <div class="hero-content">
+                <h1 class="text-5xl md:text-4xl sm:text-3xl font-bold mb-4 text-shadow-[3px_3px_6px_rgba(0,0,0,0.5)] animate-fadeInDown">
+                    जय माता दी
+                </h1>
+                <div class="dynamic-text-container">
+                    <p id="dynamicText" class="text-2xl md:text-xl sm:text-lg font-bold text-white mb-2 transition-opacity duration-700 ease-in-out opacity-95 animate-fadeInUp delay-[0.3s]">Loading...</p>
+                    <p class="common-text text-2xl md:text-xl sm:text-lg text-white opacity-90 animate-fadeInUp delay-[0.3s]">
+                        नमस्तस्यै नमस्तस्यै नमस्तस्यै नमो नमः॥
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="main-content p-10 md:p-8 sm:p-6">
+            <div class="container max-w-6xl mx-auto">
+                <div class="destinations-header text-center mb-10 text-white">
+                    <h2 class="text-4xl md:text-3xl sm:text-2xl font-bold mb-2 text-shadow-[2px_2px_4px_rgba(0,0,0,0.3)]">OUR TRIP</h2>
+                    <p class="text-xl md:text-lg sm:text-base opacity-90">Memories to cherish for lifetime</p>
+                </div>
+                <div class="destinations-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+                    <div class="destination-card rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] cursor-pointer relative animate-fadeInUp" onclick="showSection('matadham')">
+                        <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/matadham.jpeg" alt="Mata Dham" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out"/>
+                        <div class="card-content p-6 text-center text-gray-800">
+                            <h3 class="card-title text-2xl font-bold mb-2">Mata Dham</h3>
+                            <p class="card-description leading-relaxed text-sm">A sacred pilgrimage site nestled in the mountains, offering spiritual solace and breathtaking views.</p>
+                        </div>
+                        <div class="card-overlay absolute inset-0 bg-black bg-opacity-40 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                            <span>View Destination →</span>
+                        </div>
+                    </div>
+                    <div class="destination-card rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] cursor-pointer relative animate-fadeInUp delay-[0.2s]" onclick="showSection('patnitop')">
+                        <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/patnitop.jpeg" alt="Patni Top" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out"/>
+                        <div class="card-content p-6 text-center text-gray-800">
+                            <h3 class="card-title text-2xl font-bold mb-2">Patni Top</h3>
+                            <p class="card-description leading-relaxed text-sm">A mesmerizing hill station offering panoramic views of snow-capped mountains and lush green meadows.</p>
+                        </div>
+                        <div class="card-overlay absolute inset-0 bg-black bg-opacity-40 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                            <span>View Destination →</span>
+                        </div>
+                    </div>
+                    <div class="destination-card rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] cursor-pointer relative animate-fadeInUp delay-[0.4s]" onclick="showSection('natthatop')">
+                        <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/natthatop.jpeg" alt="Nattha Top" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out"/>
+                        <div class="card-content p-6 text-center text-gray-800">
+                            <h3 class="card-title text-2xl font-bold mb-2">Nattha Top</h3>
+                            <p class="card-description leading-relaxed text-sm">A serene mountain peak perfect for trekking enthusiasts and nature lovers seeking tranquility.</p>
+                        </div>
+                        <div class="card-overlay absolute inset-0 bg-black bg-opacity-40 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                            <span>View Destination →</span>
+                        </div>
+                    </div>
+                    <div class="destination-card rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] cursor-pointer relative animate-fadeInUp delay-[0.6s]" onclick="showSection('greenhouse')">
+                        <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/greenhouse.jpeg" alt="Green House" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out"/>
+                        <div class="card-content p-6 text-center text-gray-800">
+                            <h3 class="card-title text-2xl font-bold mb-2">Green House</h3>
+                            <p class="card-description leading-relaxed text-sm">A botanical paradise showcasing exotic plants and flowers in a controlled environment.</p>
+                        </div>
+                        <div class="card-overlay absolute inset-0 bg-black bg-opacity-40 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                            <span>View Destination →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mata Dham Section -->
+    <section id="matadham-section" class="section-bg-matadham min-h-screen pt-16 hidden">
+        <button onclick="showSection('homepage')" class="fixed top-20 left-4 z-50 bg-white bg-opacity-80 text-blue-700 font-semibold px-4 py-2 rounded-lg shadow hover:bg-opacity-100 transition hidden md:block">← Back</button>
+        <div class="hero-section h-[40vh] flex items-center justify-center text-center text-white">
+            <div class="p-4">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">Trip to Mata Dham</h1>
+                <p class="text-xl md:text-2xl">A collection of our cherished memories.</p>
+            </div>
+        </div>
+        <div class="container mx-auto p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mt-[-10vh] relative z-10">
+                <!-- Card for Photos -->
+                <a href="https://drive.google.com/drive/folders/1GBHAGz8m8iRpzYxURarUxdLPn1QuiSCC?usp=sharing" target="_blank" class="card block relative rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] group">
+                    <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/matadhamimg-min-min.jpg" alt="Photos" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out" />
+                    <div class="p-6 text-center">
+                        <h2 class="text-3xl font-bold text-white mb-2">Photos</h2>
+                        <p class="text-gray-200 leading-relaxed">View the high-resolution images from our journey.</p>
+                    </div>
+                    <div class="card-overlay absolute inset-0 bg-blue-600 bg-opacity-70 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                        <span>View Photos →</span>
+                    </div>
+                </a>
+                <!-- Card for Videos -->
+                <a href="https://drive.google.com/drive/folders/1KD1ZN8KCVMfDx4mGUnzS8GkN1tBPIFKA?usp=sharing" target="_blank" class="card block relative rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] group">
+                    <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/matadhamvid-min-min.jpg" alt="Videos" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out" />
+                    <div class="p-6 text-center">
+                        <h2 class="text-3xl font-bold text-white mb-2">Videos</h2>
+                        <p class="text-gray-200 leading-relaxed">Watch the beautiful moments captured on video.</p>
+                    </div>
+                    <div class="card-overlay absolute inset-0 bg-blue-600 bg-opacity-70 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                        <span>View Videos →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patnitop Section -->
+    <section id="patnitop-section" class="section-bg-patnitop min-h-screen pt-16 hidden">
+        <button onclick="showSection('homepage')" class="fixed top-20 left-4 z-50 bg-white bg-opacity-80 text-blue-700 font-semibold px-4 py-2 rounded-lg shadow hover:bg-opacity-100 transition hidden md:block">← Back</button>
+        <div class="hero-section h-[40vh] flex items-center justify-center text-center text-white">
+            <div class="p-4">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">Trip to Patnitop</h1>
+                <p class="text-xl md:text-2xl">A collection of our cherished memories.</p>
+            </div>
+        </div>
+        <div class="container mx-auto p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mt-[-10vh] relative z-10">
+                <!-- Card for Photos -->
+                <a href="https://drive.google.com/drive/folders/1aKrRw26kCtPgCatSZLAL7zIf_riBSq1N?usp=sharing" target="_blank" class="card block relative rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] group">
+                    <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/patnitopimg-min-min.jpg" alt="Photos" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out" />
+                    <div class="p-6 text-center">
+                        <h2 class="text-3xl font-bold text-white mb-2">Photos</h2>
+                        <p class="text-gray-200 leading-relaxed">View the high-resolution images from our journey.</p>
+                    </div>
+                    <div class="card-overlay absolute inset-0 bg-blue-600 bg-opacity-70 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                        <span>View Photos →</span>
+                    </div>
+                </a>
+                <!-- Card for Videos -->
+                <a href="https://drive.google.com/drive/folders/1ORDRplQvXh7sqLJqKWM_UioziC0hAxit?usp=sharing" target="_blank" class="card block relative rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] group">
+                    <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/patnitopvid-min-min.jpg" alt="Videos" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out" />
+                    <div class="p-6 text-center">
+                        <h2 class="text-3xl font-bold text-white mb-2">Videos</h2>
+                        <p class="text-gray-200 leading-relaxed">Watch the beautiful moments captured on video.</p>
+                    </div>
+                    <div class="card-overlay absolute inset-0 bg-blue-600 bg-opacity-70 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                        <span>View Videos →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nattha Top Section -->
+    <section id="natthatop-section" class="section-bg-natthatop min-h-screen pt-16 hidden">
+        <button onclick="showSection('homepage')" class="fixed top-20 left-4 z-50 bg-white bg-opacity-80 text-blue-700 font-semibold px-4 py-2 rounded-lg shadow hover:bg-opacity-100 transition hidden md:block">← Back</button>
+        <div class="hero-section h-[40vh] flex items-center justify-center text-center text-white">
+            <div class="p-4">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">Trip to Nattha Top</h1>
+                <p class="text-xl md:text-2xl">A collection of our cherished memories.</p>
+            </div>
+        </div>
+        <div class="container mx-auto p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mt-[-10vh] relative z-10">
+                <!-- Card for Photos -->
+                <a href="https://drive.google.com/drive/folders/1RugDXND8KL5sxRCugCAoS-ta2VgbeV2p?usp=sharing" target="_blank" class="card block relative rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] group">
+                    <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/natthatopimg-min-min.jpg" alt="Photos" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out" />
+                    <div class="p-6 text-center">
+                        <h2 class="text-3xl font-bold text-white mb-2">Photos</h2>
+                        <p class="text-gray-200 leading-relaxed">View the high-resolution images from our journey.</p>
+                    </div>
+                    <div class="card-overlay absolute inset-0 bg-blue-600 bg-opacity-70 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                        <span>View Photos →</span>
+                    </div>
+                </a>
+                <!-- Card for Videos -->
+                <a href="https://drive.google.com/drive/folders/190iuZL0OyJo2-1Nb7-VXpzc3ZSYWEyGx?usp=sharing" target="_blank" class="card block relative rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] group">
+                    <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/natthatopvid-min-min.jpg" alt="Videos" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out" />
+                    <div class="p-6 text-center">
+                        <h2 class="text-3xl font-bold text-white mb-2">Videos</h2>
+                        <p class="text-gray-200 leading-relaxed">Watch the beautiful moments captured on video.</p>
+                    </div>
+                    <div class="card-overlay absolute inset-0 bg-blue-600 bg-opacity-70 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                        <span>View Videos →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Green House Section -->
+    <section id="greenhouse-section" class="section-bg-greenhouse min-h-screen pt-16 hidden">
+        <button onclick="showSection('homepage')" class="fixed top-20 left-4 z-50 bg-white bg-opacity-80 text-blue-700 font-semibold px-4 py-2 rounded-lg shadow hover:bg-opacity-100 transition hidden md:block">← Back</button>
+        <div class="hero-section h-[40vh] flex items-center justify-center text-center text-white">
+            <div class="p-4">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">Trip to Green House</h1>
+                <p class="text-xl md:text-2xl">A collection of our cherished memories.</p>
+            </div>
+        </div>
+        <div class="container mx-auto p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mt-[-10vh] relative z-10">
+                <!-- Card for Photos -->
+                <a href="https://drive.google.com/drive/folders/1qewpwmFGVuNtEYCGPLfNkm1mHFjFd-G6?usp=sharing" target="_blank" class="card block relative rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] group">
+                    <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/greenhouseimg-min-min.jpg" alt="Photos" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out" />
+                    <div class="p-6 text-center">
+                        <h2 class="text-3xl font-bold text-white mb-2">Photos</h2>
+                        <p class="text-gray-200 leading-relaxed">View the high-resolution images from our journey.</p>
+                    </div>
+                    <div class="card-overlay absolute inset-0 bg-blue-600 bg-opacity-70 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                        <span>View Photos →</span>
+                    </div>
+                </a>
+                <!-- Card for Videos -->
+                <a href="https://drive.google.com/drive/folders/1CB7BT31d8d6L33yhTYbEABkCjRYrl4YD?usp=sharing" target="_blank" class="card block relative rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out hover:translate-y-[-10px] hover:shadow-[0_25px_50px_rgba(0,0,0,0.15)] group">
+                    <img src="https://raw.githubusercontent.com/Tejaspandey11/pop-audio/main/greenhousevid-min-min.jpg" alt="Videos" class="card-image w-full h-64 object-cover transition-transform duration-300 ease-in-out" />
+                    <div class="p-6 text-center">
+                        <h2 class="text-3xl font-bold text-white mb-2">Videos</h2>
+                        <p class="text-gray-200 leading-relaxed">Watch the beautiful moments captured on video.</p>
+                    </div>
+                    <div class="card-overlay absolute inset-0 bg-blue-600 bg-opacity-70 opacity-0 transition-opacity duration-300 ease-in-out flex items-center justify-center text-white text-xl font-semibold">
+                        <span>View Videos →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Dynamic text for homepage
+        document.addEventListener('DOMContentLoaded', () => {
+            const dynamicTextElement = document.getElementById('dynamicText');
+            if (dynamicTextElement) {
+                const lines = [
+                    "या देवी सर्वभूतेषु बुद्धिरूपेण संस्थिता ।",
+                    "या देवी सर्वभूतेषु शक्तिरूपेण संस्थिता ।",
+                    "या देवी सर्वभूतेषु शान्तिरूपेण संस्थिता ।",
+                    "या देवी सर्वभूतेषु श्रद्धा रूपेण संस्थिता ।",
+                    "या देवी सर्वभूतेषु लक्ष्मीरूपेण संस्थिता ।",
+                    "या देवी सर्वभूतेषु दयारूपेण संस्थिता ।",
+                    "या देवी सर्वभूतेषु लज्जारूपेण संस्थिता ।",
+                    "या देवी सर्वभूतेषु वृत्तिरूपेण संस्थिता ।"
+                ];
+                let currentIndex = 0;
+                function updateText() {
+                    dynamicTextElement.classList.add('fade-out');
+                    setTimeout(() => {
+                        currentIndex = (currentIndex + 1) % lines.length;
+                        dynamicTextElement.textContent = lines[currentIndex];
+                        dynamicTextElement.classList.remove('fade-out');
+                    }, 700);
+                }
+                dynamicTextElement.textContent = lines[currentIndex];
+                setInterval(updateText, 5000);
+            }
+        });
+
+        // Section navigation logic
+        function showSection(section) {
+            // Hide all sections
+            document.getElementById('homepage-section').style.display = 'none';
+            document.getElementById('matadham-section').style.display = 'none';
+            document.getElementById('patnitop-section').style.display = 'none';
+            document.getElementById('natthatop-section').style.display = 'none';
+            document.getElementById('greenhouse-section').style.display = 'none';
+
+            // Remove all body background classes
+            document.body.classList.remove('homepage');
+            // Show the selected section and set body class if homepage
+            if (section === 'homepage') {
+                document.getElementById('homepage-section').style.display = 'block';
+                document.body.classList.add('homepage');
+            } else {
+                document.getElementById(section + '-section').style.display = 'block';
+            }
+
+            // Update nav active state
+            document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+            let navIndex = 0;
+            if (section === 'homepage') navIndex = 0;
+            if (section === 'matadham') navIndex = 1;
+            if (section === 'patnitop') navIndex = 2;
+            if (section === 'natthatop') navIndex = 3;
+            if (section === 'greenhouse') navIndex = 4;
+            document.querySelectorAll('.nav-link')[navIndex].classList.add('active');
+
+            // Scroll to top on navigation
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // On load, show homepage
+        showSection('homepage');
+    </script>
+</body>
+</html>
